@@ -1,0 +1,86 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <br>
+            <h1 class="text-center"> Customer List</h1>
+            <br>
+            <button class="btn btn-success text-right" (click)="addCustomer()">Add Customer</button>
+            <form [formGroup]="editCustomerForm" novalidate class="form">
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope='col'>Name</th>
+                        <th scope='col'>Address</th>
+                        <th scope='col'>Description</th>
+                        <th scope='col'>Customer ID</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let customer of Customers" >
+                        <ng-container *ngIf="custId!=customer.c_id ; else Editable">
+                        <td>{{customer.name}}</td>
+                        <td>{{customer.address}}</td>
+                        <td>{{customer.description}}</td>
+                        <td>{{customer.c_id}}</td>
+                        <td><button class="btn btn-success" (click)="editCustomer(customer)">Edit</button></td>
+                        <td><button class="btn btn-danger" (click)="deleteCustomer(customer)">Delete</button></td>
+                        <td><button class="btn btn-success" (click)="showUsers(customer)">Show Users</button></td>                        
+                        </ng-container>
+                    
+                    <ng-template #Editable>
+                        
+                                <td>
+                                <span class="form-group">
+                                    <input formControlName="name" class="form-control" type="text">
+                                </span>
+                                </td>
+                                <td>
+                                <span class="form-group">
+                                    <input type="text" formControlName="address" class="form-control">
+                                </span>
+                                </td>
+                                <td>
+                                <span class="form-group">
+                                    <input type="text" formControlName="description" class="form-control">
+                                </span>
+                                </td>
+                                <td>{{customer.c_id}}</td>
+                                <td><button class="btn btn-success" (click)="onSave()" >Save</button></td>
+                                <td><button class="btn btn-danger" (click)="onCancel()" >Cancel</button></td>                            
+                        
+                    </ng-template>
+                </tr>
+                
+                </tbody>
+            </table>
+            <p>Form Value: {{addCustomerForm.value | json}}</p>
+            <p>Form Value: {{editCustomerForm.value | json}}</p> 
+
+        </form>
+        <form [formGroup]="addCustomerForm" novalidate class="form">
+
+            <tr *ngIf="custId==-1">
+                <td>
+                    <span class="form-group">
+                        <input formControlName="name" class="form-control" type="text" placeholder="Customer name">
+                    </span>
+                    </td>
+                    <td>
+                    <span class="form-group">
+                        <input type="text" formControlName="address" class="form-control" placeholder="Website Address">
+                    </span>
+                    </td>
+                    <td>
+                    <span class="form-group">
+                        <input type="text" formControlName="description" class="form-control" placeholder="Description">
+                    </span>
+                    </td>
+                    <td><button class="btn btn-success" (click)="onSave()" >Save</button></td>
+                    <td><button class="btn btn-danger" (click)="onCancel()" >Cancel</button></td>    
+            </tr>
+            </form>
+        </div>
+    </div>
+</div>
